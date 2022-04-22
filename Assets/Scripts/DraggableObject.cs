@@ -15,6 +15,7 @@ public class DraggableObject : MonoBehaviour, IDragHandler, IEndDragHandler
         if (!draggableClone) 
         {
             draggableClone = Object.Instantiate(this.gameObject, transform.parent.parent);
+            draggableClone.GetComponent<RectTransform>().sizeDelta = this.GetComponent<RectTransform>().sizeDelta;
         }
         
         parentGroup.CheckPosition(this, draggableClone);

@@ -41,14 +41,13 @@ public class ColorManager : MonoBehaviour
         draggableParent.ShuffleAllChildren();
 
         //shuffle the options so that it can't be won right away
-        do 
+        draggableParent.SetupChildren(options);
+
+        //if they are correct, shuffle them again. While we could loop here, that messes with Unity's excecution order. If they're in the correct order twice, then the user's just lucky
+        if (IsCorrectResult(SortOptions(options), colorChecker))
         {
             draggableParent.SetupChildren(options);
-        } while(IsCorrectResult(
-            options.OrderBy(option => option.transform.GetSiblingIndex()),
-            colorChecker
-        ));
-        
+        }
 
         //TODO: Change Connection to UI Elements To Work Through Events
         sortColorDisplay.UpdateColor(ConvertColorOptionsToColor(colorChecker));
@@ -134,12 +133,7 @@ public class ColorManager : MonoBehaviour
 
     public void CheckResult() 
     {
-        bool isCorrect = IsCorrectResult(
-            options.OrderBy(option => option.transform.GetSiblingIndex()),
-            colorChecker
-        );
-
-        if (isCorrect)
+        if (IsCorrectResult(SortOptions(options), colorChecker))
         {
             levelIndex++;
 
@@ -162,6 +156,11 @@ public class ColorManager : MonoBehaviour
                 resultsDisplay.DisplayLoseResults();
             }
         }
+    }
+
+    IEnumerable<GameObject> SortOptions(List<GameObject> options)
+    { 
+        return options.OrderBy(option => option.transform.GetSiblingIndex());
     }
 
     bool IsCorrectResult(IEnumerable<GameObject> sortedOptions, ColorOptions colorChecker) 
