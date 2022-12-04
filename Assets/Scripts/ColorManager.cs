@@ -210,7 +210,7 @@ public class ColorManager : MonoBehaviour
 [System.Serializable]
 class Level
 {
-    //these variables are case sensitive and must match the strings "firstName" and "lastName" in the JSON.
+    //these variables are case sensitive and must match the strings "colorType" and "colorAmounts" in the JSON.
     public string colorType;
     public string[] colorAmounts;
 }
@@ -218,7 +218,7 @@ class Level
 [System.Serializable]
 class Levels
 {
-    //employees is case sensitive and must match the string "employees" in the JSON.
+    //levels is case sensitive and must match the string "levels" in the JSON.
     public Level[] levels;
 }
 
